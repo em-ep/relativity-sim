@@ -38,7 +38,7 @@ h1 {
 .summary-card {
     flex: 1 1 220px;
 
-    background: #f0f0f0;
+    background: #b9b7b7;
 
     padding: 15px;
 
@@ -55,6 +55,10 @@ h1 {
 .summary-value {
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+#summary:empty {
+    display: none;
 }
 
 #accelerationDisplay {
