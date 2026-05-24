@@ -443,21 +443,8 @@ function makeSummary(
                     ${travelerYears.toFixed(2)}
                     years
                 </div>
-            </div>
 
-
-            <div class="summary-card">
-                <h3>
-                    Earth Frame Time
-                </h3>
-
-                <div class="summary-value">
-                    ${earthYears.toFixed(2)}
-                    years
-                </div>
-            </div>
-
-            <div class="summary-card">
+                <div class="summary-card">
                 <h3>
                     Peak Relativistic Velocity
                 </h3>
@@ -465,6 +452,9 @@ function makeSummary(
                 <div class="summary-value">
                     ${velocityFraction.toFixed(3)} c
                 </div>
+                
+            </div>
+            </div>
 
             <div class="summary-card">
                 <h3>
@@ -476,7 +466,16 @@ function makeSummary(
                     years
                 </div>
             </div>
-            
+
+            <div class="summary-card">
+                <h3>
+                    Earth Frame Time
+                </h3>
+
+                <div class="summary-value">
+                    ${earthYears.toFixed(2)}
+                    years
+                </div>
             </div>
 
         </div>
