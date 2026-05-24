@@ -187,7 +187,11 @@ function makeTimeGraph(
             mode: "lines",
             type: "scatter",
 
-            name: "Classical Earth"
+            name: "Classical Earth",
+
+            line: {
+                dash: "dash"
+            }
         },
 
         {
@@ -197,7 +201,11 @@ function makeTimeGraph(
             mode: "lines",
             type: "scatter",
 
-            name: "Classical Traveler"
+            name: "Classical Traveler",
+
+            line: {
+                dash: "dash"
+            }
         }
 
     ];
@@ -275,7 +283,11 @@ function makeVelocityGraph(
             mode: "lines",
             type: "scatter",
 
-            name: "Classical"
+            name: "Classical",
+
+            line: {
+                dash: "dash"
+            }
         }
 
     ];
@@ -314,6 +326,14 @@ function makeDistanceGraph(
     const earthTimes =
         Array.from(result.earth_times);
 
+    const classicalEarthTimes =
+    Array.from(classicalResult.earth_times);
+
+    const classicalEarthYears =
+        classicalEarthTimes.map(
+            t => t / (60*60*24*365.25)
+        );
+
     const distances =
         Array.from(result.distances);
 
@@ -348,13 +368,17 @@ function makeDistanceGraph(
         },
 
         {
-        x: earthYears,
-        y: classicalDistanceLY,
+            x: classicalEarthYears,
+            y: classicalDistanceLY,
 
-        mode: "lines",
-        type: "scatter",
+            mode: "lines",
+            type: "scatter",
 
-        name: "Classical"
+            name: "Classical",
+
+            line: {
+                dash: "dash"
+            }
         }
 
     ];
