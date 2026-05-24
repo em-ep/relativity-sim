@@ -2,7 +2,7 @@ async function main() {
 
     let pyodide = await loadPyodide();
 
-    await pyodide.loadPackage([]);
+    await pyodide.loadPackage(["numpy"]);
 
     const response = await fetch("physics.py");
     const pythonCode = await response.text();
@@ -82,7 +82,9 @@ classical_trip_time(distance, acceleration)
     const result =
     pyodide.runPython(`
 relativistic_trajectory(distance, acceleration)
-`).toJs();
+`).toJs({
+    dict_converter: Object.fromEntries
+});
 
     makeTimeGraph(result)
 
@@ -90,13 +92,19 @@ relativistic_trajectory(distance, acceleration)
 
 function makeTimeGraph(result) {
 
+    const earthTimes =
+        Array.from(result.earth_times);
+
+    const shipTimes =
+        Array.from(result.ship_times);
+
     const earthYears =
-        result.earth_times.map(
+        earthTimes.map(
             t => t / (60*60*24*365.25)
         );
 
     const shipYears =
-        result.ship_times.map(
+        shipTimes.map(
             t => t / (60*60*24*365.25)
         );
 
