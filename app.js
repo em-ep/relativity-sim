@@ -76,56 +76,72 @@ function runSimulation(pyodide) {
 classical_trip_time(distance, acceleration)
 `);
 
-    const relativistic =
-        pyodide.runPython(`
-relativistic_trip_time(distance, acceleration)
-`);
+    const result =
+    pyodide.runPython(`
+relativistic_trajectory(distance, acceleration)
+`).toJs();
 
-    const classicalYears =
-        secondsToYears(classical);
-
-    const relativisticYears =
-        secondsToYears(relativistic);
-
-    document.getElementById("summary").innerHTML = `
-        <h2>Trip Summary</h2>
-
-        <p>
-            Classical Traveler:
-            ${classicalYears.toFixed(2)} years
-        </p>
-
-        <p>
-            Relativistic Traveler:
-            ${relativisticYears.toFixed(2)} years
-        </p>
-    `;
-
-    makeGraph(classicalYears, relativisticYears);
+    makeTimeGraph(result)
 
 }
 
-function makeGraph(classicalYears, relativisticYears) {
+function makeTimeGraph(result) {
+
+    const earthYears =
+        result.earth_times.map(
+            t => t / (60*60*24*365.25)
+        );
+
+    const shipYears =
+        result.ship_times.map(
+            t => t / (60*60*24*365.25)
+        );
 
     const data = [
 
         {
-            x: ["Classical", "Relativistic"],
-            y: [classicalYears, relativisticYears],
-            type: "bar"
+            x: earthYears,
+            y: earthYears,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Earth Observer"
+        },
+
+        {
+            x: earthYears,
+            y: shipYears,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Traveler"
         }
 
     ];
 
     const layout = {
 
-        title: "Experienced Trip Duration",
+        title:
+            "Proper Time vs Earth Time",
+
+        xaxis: {
+            title:
+                "Earth Time (years)"
+        },
+
         yaxis: {
-            title: "Years"
+            title:
+                "Elapsed Time (years)"
         }
 
     };
 
-    Plotly.newPlot("graph", data, layout);
+    Plotly.newPlot(
+        "graph",
+        data,
+        layout
+    );
 
 }
