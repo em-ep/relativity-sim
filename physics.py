@@ -95,6 +95,64 @@ def relativistic_trajectory(distance_ly, acceleration):
     }
 
 
+def classical_trajectory(distance_ly, acceleration):
+
+    d_total = distance_ly * LIGHTYEAR
+
+    d_half = d_total / 2
+
+    t_half = np.sqrt(
+        2 * d_half / acceleration
+    )
+
+    times = np.linspace(
+        0,
+        2 * t_half,
+        500
+    )
+
+    earth_times = []
+    ship_times = []
+    velocities = []
+    distances = []
+
+    for t in times:
+
+        if t <= t_half:
+
+            x = 0.5 * acceleration * t**2
+
+            v = acceleration * t
+
+        else:
+
+            t_phase = 2 * t_half - t
+
+            x_remaining = (
+                0.5 * acceleration * t_phase**2
+            )
+
+            x = d_total - x_remaining
+
+            v = acceleration * t_phase
+
+        earth_times.append(t)
+
+        # no relativistic effects
+        ship_times.append(t)
+
+        velocities.append(v)
+
+        distances.append(x)
+
+    return {
+        "earth_times": earth_times,
+        "ship_times": ship_times,
+        "velocities": velocities,
+        "distances": distances
+    }
+
+
 def classical_trip_time(distance_ly, acceleration):
 
     d = distance_ly * LIGHTYEAR

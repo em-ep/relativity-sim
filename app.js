@@ -86,20 +86,45 @@ relativistic_trajectory(distance, acceleration)
     dict_converter: Object.fromEntries
 });
 
-    makeTimeGraph(result);
+    const classicalResult =
+    pyodide.runPython(`
+classical_trajectory(distance, acceleration)
+`).toJs({
+    dict_converter: Object.fromEntries
+});
 
-    makeVelocityGraph(result);
+    makeTimeGraph(
+    result,
+    classicalResult
+);
 
-    makeDistanceGraph(result);
+    makeVelocityGraph(
+    result,
+    classicalResult
+);
+
+    makeDistanceGraph(
+    result,
+    classicalResult
+);
 }
 
-function makeTimeGraph(result) {
+function makeTimeGraph(
+    result,
+    classicalResult
+) {
 
     const earthTimes =
         Array.from(result.earth_times);
 
     const shipTimes =
         Array.from(result.ship_times);
+
+    const classicalEarthTimes =
+        Array.from(classicalResult.earth_times);
+
+    const classicalShipTimes =
+        Array.from(classicalResult.ship_times);
 
     const earthYears =
         earthTimes.map(
@@ -108,6 +133,16 @@ function makeTimeGraph(result) {
 
     const shipYears =
         shipTimes.map(
+            t => t / (60*60*24*365.25)
+        );
+
+    const classicalEarthYears =
+        classicalEarthTimes.map(
+            t => t / (60*60*24*365.25)
+        );
+
+    const classicalShipYears =
+        classicalShipTimes.map(
             t => t / (60*60*24*365.25)
         );
 
@@ -120,7 +155,7 @@ function makeTimeGraph(result) {
             mode: "lines",
             type: "scatter",
 
-            name: "Earth Observer"
+            name: "Relativistic Earth"
         },
 
         {
@@ -130,7 +165,27 @@ function makeTimeGraph(result) {
             mode: "lines",
             type: "scatter",
 
-            name: "Traveler"
+            name: "Relativistic Traveler"
+        },
+
+        {
+            x: classicalEarthYears,
+            y: classicalEarthYears,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Classical Earth"
+        },
+
+        {
+            x: classicalEarthYears,
+            y: classicalShipYears,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Classical Traveler"
         }
 
     ];
@@ -153,27 +208,17 @@ function makeTimeGraph(result) {
     };
 
     Plotly.newPlot(
-    "timeGraph",
-    data,
-    layout
-    );
-
-    Plotly.newPlot(
-    "velocityGraph",
-    data,
-    layout
-    );
-
-    Plotly.newPlot(
-    "distanceGraph",
-    data,
-    layout
+        "timeGraph",
+        data,
+        layout
     );
 
 }
 
-
-function makeVelocityGraph(result) {
+function makeVelocityGraph(
+    result,
+    classicalResult
+) {
 
     const earthTimes =
         Array.from(result.earth_times);
@@ -191,6 +236,14 @@ function makeVelocityGraph(result) {
             v => v / 299792458
         );
 
+    const classicalVelocities =
+    Array.from(classicalResult.velocities);
+
+    const classicalVelocityFractions =
+        classicalVelocities.map(
+            v => v / 299792458
+        );
+
     const data = [
 
         {
@@ -200,7 +253,17 @@ function makeVelocityGraph(result) {
             mode: "lines",
             type: "scatter",
 
-            name: "Velocity"
+            name: "Relativistic"
+        },
+
+        {
+            x: earthYears,
+            y: classicalVelocityFractions,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Classical"
         }
 
     ];
@@ -231,7 +294,10 @@ function makeVelocityGraph(result) {
 }
 
 
-function makeDistanceGraph(result) {
+function makeDistanceGraph(
+    result,
+    classicalResult
+) {
 
     const earthTimes =
         Array.from(result.earth_times);
@@ -249,6 +315,14 @@ function makeDistanceGraph(result) {
             d => d / 9.461e15
         );
 
+    const classicalDistances =
+    Array.from(classicalResult.distances);
+
+    const classicalDistanceLY =
+        classicalDistances.map(
+            d => d / 9.461e15
+        );
+
     const data = [
 
         {
@@ -259,6 +333,16 @@ function makeDistanceGraph(result) {
             type: "scatter",
 
             name: "Distance"
+        },
+
+        {
+        x: earthYears,
+        y: classicalDistanceLY,
+
+        mode: "lines",
+        type: "scatter",
+
+        name: "Classical"
         }
 
     ];
