@@ -249,7 +249,7 @@ function makeVelocityGraph(
         );
 
     const classicalVelocities =
-    Array.from(classicalResult.velocities);
+        Array.from(classicalResult.velocities);
 
     const classicalVelocityFractions =
         classicalVelocities.map(
@@ -402,6 +402,9 @@ function makeSummary(
     const velocities =
         Array.from(result.velocities);
 
+    const classicalVelocities = 
+        Array.from(classicalResult.velocities);
+
     const finalEarthTime =
         earthTimes[earthTimes.length - 1];
 
@@ -415,6 +418,9 @@ function makeSummary(
 
     const maxVelocity =
         Math.max(...velocities);
+
+    const maxClassicalVelocity = 
+        Math.max(...classicalVelocities)
 
     const earthYears =
         secondsToYears(finalEarthTime);
@@ -445,15 +451,15 @@ function makeSummary(
                 </div>
 
                 <div class="summary-card">
-                <h3>
-                    Peak Relativistic Velocity
-                </h3>
+                    <h3>
+                        Peak Relativistic Velocity
+                    </h3>
 
-                <div class="summary-value">
-                    ${velocityFraction.toFixed(3)} c
+                    <div class="summary-value">
+                        ${velocityFraction.toFixed(3)} c
+                    </div>
+
                 </div>
-                
-            </div>
             </div>
 
             <div class="summary-card">
@@ -465,6 +471,18 @@ function makeSummary(
                     ${classicalYears.toFixed(2)}
                     years
                 </div>
+
+                <div class="summary-card">
+                    <h3>
+                        Peak Relativistic Velocity
+                    </h3>
+
+                    <div class="summary-value">
+                        ${velocityFraction.toFixed(3)} c
+                    </div>
+
+                </div>
+            </div>
             </div>
 
             <div class="summary-card">
