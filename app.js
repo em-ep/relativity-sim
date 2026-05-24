@@ -119,6 +119,11 @@ classical_trajectory(distance, acceleration)
     result,
     classicalResult
 );
+
+makeDistanceVsShipTimeGraph(
+    result,
+    classicalResult
+);
 }
 
 function makeTimeGraph(
@@ -243,6 +248,14 @@ function makeVelocityGraph(
     const earthTimes =
         Array.from(result.earth_times);
 
+    const classicalEarthTimes =
+    Array.from(classicalResult.earth_times);
+
+    const classicalEarthYears =
+        classicalEarthTimes.map(
+            t => t / (60*60*24*365.25)
+        );
+
     const velocities =
         Array.from(result.velocities);
 
@@ -277,7 +290,7 @@ function makeVelocityGraph(
         },
 
         {
-            x: earthYears,
+            x: classicalEarthYears,
             y: classicalVelocityFractions,
 
             mode: "lines",
@@ -513,7 +526,7 @@ function makeSummary(
 
             <div class="summary-card">
                 <h3>
-                    Earth Frame Time
+                    Earth Frame Time (Relativistic Case)
                 </h3>
 
                 <div class="summary-value">
@@ -525,4 +538,50 @@ function makeSummary(
         </div>
 
     `;
+}
+
+function makeDistanceVsShipTimeGraph(result, classicalResult) {
+
+    const distances = Array.from(result.distances);
+    const shipTimes = Array.from(result.ship_times);
+
+    const classicalDistances = Array.from(classicalResult.distances);
+    const classicalShipTimes = Array.from(classicalResult.ship_times);
+
+    // Convert to useful units
+    const distanceLY = distances.map(d => d / 9.461e15);
+    const classicalDistanceLY = classicalDistances.map(d => d / 9.461e15);
+
+    const shipYears = shipTimes.map(t => t / (60 * 60 * 24 * 365.25));
+    const classicalShipYears = classicalShipTimes.map(t => t / (60 * 60 * 24 * 365.25));
+
+    const data = [
+        {
+            x: distanceLY,
+            y: shipYears,
+            mode: "lines",
+            type: "scatter",
+            name: "Relativistic"
+        },
+        {
+            x: classicalDistanceLY,
+            y: classicalShipYears,
+            mode: "lines",
+            type: "scatter",
+            name: "Classical",
+            line: { dash: "dash" }
+        }
+    ];
+
+    const layout = {
+        title: "Traveler Proper Time vs Distance Traveled",
+        xaxis: {
+            title: "Distance Traveled (light years)"
+        },
+        yaxis: {
+            title: "Traveler Time (years)"
+        }
+    };
+
+    Plotly.newPlot("distanceVsTimeGraph", data, layout);
 }
