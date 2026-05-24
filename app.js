@@ -332,7 +332,7 @@ function makeDistanceGraph(
             mode: "lines",
             type: "scatter",
 
-            name: "Distance"
+            name: "Relativistic"
         },
 
         {
