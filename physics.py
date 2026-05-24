@@ -52,10 +52,8 @@ def relativistic_trajectory(distance_ly, acceleration):
             )
 
         else:
-            
-            tau_phase = 2 * tau_half - tau
 
-            x_half = d_half
+            tau_phase = 2 * tau_half - tau
 
             x_remaining = (
                 c**2 / acceleration
@@ -75,6 +73,12 @@ def relativistic_trajectory(distance_ly, acceleration):
             t_remaining = (
                 c / acceleration
             ) * np.sinh(
+                acceleration * tau_phase / c
+            )
+
+            t = 2 * t_half - t_remaining
+
+            v = c * np.tanh(
                 acceleration * tau_phase / c
             )
     

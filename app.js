@@ -63,10 +63,13 @@ function runSimulation(pyodide) {
             document.getElementById("destination").value
         );
 
+    const gForce =
+    parseFloat(
+        document.getElementById("acceleration").value
+    );
+
     const acceleration =
-        parseFloat(
-            document.getElementById("acceleration").value
-        );
+        gForce * 9.81;
 
     pyodide.globals.set("distance", distance);
     pyodide.globals.set("acceleration", acceleration);
