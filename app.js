@@ -434,6 +434,9 @@ function makeSummary(
     const velocityFraction =
         maxVelocity / 299792458;
 
+    const classicalVelocityFraction = 
+        maxClassicalVelocity / 299792458;
+
     document.getElementById(
         "summary"
     ).innerHTML = `
@@ -474,15 +477,14 @@ function makeSummary(
 
                 <div class="summary-card">
                     <h3>
-                        Peak Relativistic Velocity
+                        Peak Classical Velocity
                     </h3>
 
                     <div class="summary-value">
-                        ${velocityFraction.toFixed(3)} c
+                        ${classicalVelocityFraction.toFixed(3)} c
                     </div>
 
                 </div>
-            </div>
             </div>
 
             <div class="summary-card">
