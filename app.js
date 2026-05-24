@@ -153,9 +153,21 @@ function makeTimeGraph(result) {
     };
 
     Plotly.newPlot(
-        "graph",
-        data,
-        layout
+    "timeGraph",
+    data,
+    layout
+    );
+
+    Plotly.newPlot(
+    "velocityGraph",
+    data,
+    layout
+    );
+
+    Plotly.newPlot(
+    "distanceGraph",
+    data,
+    layout
     );
 
 }
