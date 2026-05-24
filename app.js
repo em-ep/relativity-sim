@@ -86,8 +86,11 @@ relativistic_trajectory(distance, acceleration)
     dict_converter: Object.fromEntries
 });
 
-    makeTimeGraph(result)
+    makeTimeGraph(result);
 
+    makeVelocityGraph(result);
+
+    makeDistanceGraph(result);
 }
 
 function makeTimeGraph(result) {
@@ -151,6 +154,122 @@ function makeTimeGraph(result) {
 
     Plotly.newPlot(
         "graph",
+        data,
+        layout
+    );
+
+}
+
+
+function makeVelocityGraph(result) {
+
+    const earthTimes =
+        Array.from(result.earth_times);
+
+    const velocities =
+        Array.from(result.velocities);
+
+    const earthYears =
+        earthTimes.map(
+            t => t / (60*60*24*365.25)
+        );
+
+    const velocityFractions =
+        velocities.map(
+            v => v / 299792458
+        );
+
+    const data = [
+
+        {
+            x: earthYears,
+            y: velocityFractions,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Velocity"
+        }
+
+    ];
+
+    const layout = {
+
+        title:
+            "Velocity vs Earth Time",
+
+        xaxis: {
+            title:
+                "Earth Time (years)"
+        },
+
+        yaxis: {
+            title:
+                "Velocity (fraction of c)"
+        }
+
+    };
+
+    Plotly.newPlot(
+        "velocityGraph",
+        data,
+        layout
+    );
+
+}
+
+
+function makeDistanceGraph(result) {
+
+    const earthTimes =
+        Array.from(result.earth_times);
+
+    const distances =
+        Array.from(result.distances);
+
+    const earthYears =
+        earthTimes.map(
+            t => t / (60*60*24*365.25)
+        );
+
+    const distanceLY =
+        distances.map(
+            d => d / 9.461e15
+        );
+
+    const data = [
+
+        {
+            x: earthYears,
+            y: distanceLY,
+
+            mode: "lines",
+            type: "scatter",
+
+            name: "Distance"
+        }
+
+    ];
+
+    const layout = {
+
+        title:
+            "Distance vs Earth Time",
+
+        xaxis: {
+            title:
+                "Earth Time (years)"
+        },
+
+        yaxis: {
+            title:
+                "Distance Traveled (light years)"
+        }
+
+    };
+
+    Plotly.newPlot(
+        "distanceGraph",
         data,
         layout
     );
