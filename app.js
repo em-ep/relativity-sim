@@ -445,16 +445,6 @@ function makeSummary(
                 </div>
             </div>
 
-            <div class="summary-card">
-                <h3>
-                    Classical Traveler Time
-                </h3>
-
-                <div class="summary-value">
-                    ${classicalYears.toFixed(2)}
-                    years
-                </div>
-            </div>
 
             <div class="summary-card">
                 <h3>
@@ -475,6 +465,18 @@ function makeSummary(
                 <div class="summary-value">
                     ${velocityFraction.toFixed(3)} c
                 </div>
+
+            <div class="summary-card">
+                <h3>
+                    Classical Traveler Time
+                </h3>
+
+                <div class="summary-value">
+                    ${classicalYears.toFixed(2)}
+                    years
+                </div>
+            </div>
+            
             </div>
 
         </div>
