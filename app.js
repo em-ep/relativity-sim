@@ -93,6 +93,11 @@ classical_trajectory(distance, acceleration)
     dict_converter: Object.fromEntries
 });
 
+    makeSummary(
+    result,
+    classicalResult
+);
+
     makeTimeGraph(
     result,
     classicalResult
@@ -370,4 +375,102 @@ function makeDistanceGraph(
         layout
     );
 
+}
+
+
+function makeSummary(
+    result,
+    classicalResult
+) {
+
+    const earthTimes =
+        Array.from(result.earth_times);
+
+    const shipTimes =
+        Array.from(result.ship_times);
+
+    const classicalShipTimes =
+        Array.from(classicalResult.ship_times);
+
+    const velocities =
+        Array.from(result.velocities);
+
+    const finalEarthTime =
+        earthTimes[earthTimes.length - 1];
+
+    const finalShipTime =
+        shipTimes[shipTimes.length - 1];
+
+    const finalClassicalTime =
+        classicalShipTimes[
+            classicalShipTimes.length - 1
+        ];
+
+    const maxVelocity =
+        Math.max(...velocities);
+
+    const earthYears =
+        secondsToYears(finalEarthTime);
+
+    const travelerYears =
+        secondsToYears(finalShipTime);
+
+    const classicalYears =
+        secondsToYears(finalClassicalTime);
+
+    const velocityFraction =
+        maxVelocity / 299792458;
+
+    document.getElementById(
+        "summary"
+    ).innerHTML = `
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <h3>
+                    Relativistic Traveler Time
+                </h3>
+
+                <div class="summary-value">
+                    ${travelerYears.toFixed(2)}
+                    years
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h3>
+                    Classical Traveler Time
+                </h3>
+
+                <div class="summary-value">
+                    ${classicalYears.toFixed(2)}
+                    years
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h3>
+                    Earth Frame Time
+                </h3>
+
+                <div class="summary-value">
+                    ${earthYears.toFixed(2)}
+                    years
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h3>
+                    Peak Velocity
+                </h3>
+
+                <div class="summary-value">
+                    ${velocityFraction.toFixed(3)} c
+                </div>
+            </div>
+
+        </div>
+
+    `;
 }

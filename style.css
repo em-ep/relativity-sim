@@ -23,8 +23,31 @@ h1 {
 }
 
 #summary {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
     margin-bottom: 20px;
-    font-size: 1.1rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.summary-card {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.summary-card h3 {
+    margin-top: 0;
+}
+
+.summary-value {
+    font-size: 1.4rem;
+    font-weight: bold;
 }
 
 #accelerationDisplay {
