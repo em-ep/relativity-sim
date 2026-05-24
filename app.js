@@ -21,6 +21,35 @@ async function main() {
 
 main();
 
+const accelerationSlider =
+    document.getElementById("acceleration");
+
+const accelerationDisplay =
+    document.getElementById("accelerationDisplay");
+
+function updateAccelerationDisplay() {
+
+    const gForce =
+    parseFloat(accelerationSlider.value);
+
+    const acceleration =
+        gForce * 9.81;
+
+    accelerationDisplay.innerHTML =
+        `
+        ${acceleration.toFixed(2)} m/s²
+        (${gForce.toFixed(2)} g)
+        `;
+
+}
+
+accelerationSlider.addEventListener(
+    "input",
+    updateAccelerationDisplay
+);
+
+updateAccelerationDisplay();
+
 function secondsToYears(seconds) {
 
     return seconds / (60 * 60 * 24 * 365.25);
