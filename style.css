@@ -30,23 +30,30 @@ h1 {
 }
 
 .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 .summary-card {
-    background: #f8f8f8;
+    flex: 1 1 220px;
+
+    background: #f0f0f0;
+
     padding: 15px;
+
     border-radius: 8px;
+
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .summary-card h3 {
     margin-top: 0;
+    font-size: 1rem;
 }
 
 .summary-value {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
