@@ -1,13 +1,20 @@
 async function main() {
 
+    const status =
+    document.getElementById("status");
+
     let pyodide = await loadPyodide();
 
+    status.innerHTML =
+        "Loading NumPy physics engine...";
     await pyodide.loadPackage(["numpy"]);
 
     const response = await fetch("physics.py");
     const pythonCode = await response.text();
 
     pyodide.runPython(pythonCode);
+    status.innerHTML =
+        "Simulation ready.";
 
     document
         .getElementById("runButton")
@@ -462,7 +469,7 @@ function makeSummary(
 
             <div class="summary-card">
                 <h3>
-                    Peak Velocity
+                    Peak Relativistic Velocity
                 </h3>
 
                 <div class="summary-value">

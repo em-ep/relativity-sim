@@ -75,3 +75,17 @@ h1 {
     border-radius: 10px;
     margin-bottom: 20px;
 }
+
+#status {
+    background: white;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-weight: bold;
+
+    text-align: center;
+}
